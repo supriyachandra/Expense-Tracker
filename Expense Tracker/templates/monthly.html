@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Monthly Expenses</h2>
+
+<div class="alert alert-primary" role="alert">
+    <strong>Total Expense:</strong> ${{ total_expense }}
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Total Expense</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for month in monthly_expenses %}
+        <tr>
+            <td>{{ month.month }}</td>
+            <td>Rs.{{ month.total }}</td>
+            <td>{{ month.details }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

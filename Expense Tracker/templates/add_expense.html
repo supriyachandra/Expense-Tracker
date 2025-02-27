@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Add a New Expense</h2>
+    <form method="POST" onsubmit="addCustomCategory()">
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" name="date" required>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="number" class="form-control" name="amount" required>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <div class="input-group">
+                <select class="form-select" id="categoryDropdown" onchange="setCustomCategory(this.value)">
+                    <option value="" disabled selected>Select a predefined category</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Food & Groceries">Food & Groceries</option>
+                    <option value="Health & Fitness">Health & Fitness</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Debt Payments">Debt Payments</option>
+                    <option value="Savings & Investments">Savings & Investments</option>
+                    <option value="Personal Care">Personal Care</option>
+                    <option value="Childcare/Family">Childcare/Family</option>
+                    <option value="Gifts & Donations">Gifts & Donations</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Miscellaneous">Miscellaneous</option>
+                    <option value="Business Expenses">Business Expenses</option>
+                </select>
+                <input type="text" class="form-control" id="customCategory" name="category" placeholder="Type a custom category" required onblur="checkAndAddCustomCategory()">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Add Expense</button>
+    </form>
+
+    <script>
+        function setCustomCategory(value) {
+            const customCategoryInput = document.getElementById('customCategory');
+            customCategoryInput.value = value; 
+        }
+
+        function checkAndAddCustomCategory() {
+            const dropdown = document.getElementById('categoryDropdown');
+            const customCategoryInput = document.getElementById('customCategory');
+            const customValue = customCategoryInput.value.trim();
+
+            // Check if custom category is not already in the dropdown
+            if (customValue && !Array.from(dropdown.options).some(option => option.value === customValue)) {
+                const newOption = document.createElement('option');
+                newOption.value = customValue;
+                newOption.text = customValue;
+                dropdown.appendChild(newOption);
+            }
+        }
+
+        function addCustomCategory() {
+            checkAndAddCustomCategory(); 
+        }
+    </script>
+{% endblock %}
